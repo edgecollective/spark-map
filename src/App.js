@@ -6,7 +6,7 @@ import React, { useState } from "react";
 function App() {
 
   const [signal] = useState([
-    5,10,3,2,4,5,2
+    [5,10,3,2,4,5,2],[5,2,3,2,5,5,2],[5,2,20,2,5,5,2]
   ]);
 
   const [markers, setMarkers] = useState([
@@ -37,12 +37,12 @@ function App() {
   return (
     <div className="App">
       <div className="wrapper">
-      <PollSidebar
+ {/*      <PollSidebar
           markers={markers}
           addMarker={addMarker}
           deleteMarker={deleteMarker}
           centerMarker={centerMarker}
-        />
+        /> */}
         <SparklineSidebar
          signal={signal}
         />
@@ -89,8 +89,14 @@ function SparklineSidebar(props) {
   const { signal } = props
   return (
     <div className="sidebar">
-     <Sparklines data={signal}>
+     <Sparklines data={signal[0]}>
   <SparklinesLine color="blue" />
+</Sparklines>
+<Sparklines data={signal[1]}>
+  <SparklinesLine color="red" />
+</Sparklines>
+<Sparklines data={signal[2]}>
+  <SparklinesLine color="green" />
 </Sparklines>
       </div>
     );
