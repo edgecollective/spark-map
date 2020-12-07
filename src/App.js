@@ -1,6 +1,6 @@
 import "./App.css";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
-import { Sparklines, SparklinesLine } from 'react-sparklines';
+import { Sparklines, SparklinesLine, SparklinesReferenceLine,SparklinesSpots} from 'react-sparklines';
 import React, { useState } from "react";
 
 function App() {
@@ -10,9 +10,9 @@ function App() {
   ]);
 
   const [markers, setMarkers] = useState([
-    { name: "sensor1",lat: 51.505, lng: -0.09 , color:"red", signal:[15,10,3,2,4,5,2]},
-    { name: "sensor2",lat: 51.525, lng: -0.09 , color:"blue", signal:[5,2,3,2,5,5,2]},
-    { name: "sensor3",lat: 51.535, lng: -0.08 , color:"green", signal:[7,2,20,2,5,5,2]},
+    { name: "Sensor 1",lat: 51.505, lng: -0.09 , color:"blue", signal:[15,10,3,2,4,5,2]},
+    { name: "Sensor 2",lat: 51.525, lng: -0.09 , color:"blue", signal:[5,2,3,2,5,5,20]},
+    { name: "Sensor 3",lat: 51.535, lng: -0.08 , color:"blue", signal:[7,2,20,2,5,5,10]},
   ]);
 
   const [center, setCenter] = useState({ lat: 51.505, lng: -0.09 });
@@ -121,11 +121,13 @@ function PollSidebar(props) {
               centerMarker(i);
             }}
           >
-            <p><b>Name:</b> "{m.name}"</p>
+            <h2>{m.name}</h2>
             <p><b>Latest value:</b> {m.signal[0]}</p>
             <p><b>Location:</b> {m.lat}, {m.lng}{" "}</p>
             <Sparklines data={m.signal}>
   <SparklinesLine color={m.color} />
+  <SparklinesReferenceLine type="mean" />
+  <SparklinesSpots />
 </Sparklines>
           </li>
         ))}
