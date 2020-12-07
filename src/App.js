@@ -10,9 +10,9 @@ function App() {
   ]);
 
   const [markers, setMarkers] = useState([
-    { name: "sensor1",lat: 51.505, lng: -0.09 , color:"red", signal:[5,10,3,2,4,5,2]},
-    { name: "sensor1",lat: 51.525, lng: -0.09 , color:"blue", signal:[5,2,3,2,5,5,2]},
-    { name: "sensor1",lat: 51.535, lng: -0.08 , color:"green", signal:[5,2,20,2,5,5,2]},
+    { name: "sensor1",lat: 51.505, lng: -0.09 , color:"red", signal:[15,10,3,2,4,5,2]},
+    { name: "sensor2",lat: 51.525, lng: -0.09 , color:"blue", signal:[5,2,3,2,5,5,2]},
+    { name: "sensor3",lat: 51.535, lng: -0.08 , color:"green", signal:[7,2,20,2,5,5,2]},
   ]);
 
   const [center, setCenter] = useState({ lat: 51.505, lng: -0.09 });
@@ -111,32 +111,26 @@ function PollSidebar(props) {
 
   return (
     <div className="sidebar">
+     
       <ul>
         {markers.map((m, i) => (
           <li
+          
             key={`${m.lat}${m.lng}`}
             onClick={() => {
               centerMarker(i);
             }}
           >
-            <p>Name: {m.name}</p>
-            <p>Latest value:{m.signal[0]}</p>
-            <p>Lat: {m.lat}, Lon: {m.lng}{" "}</p>
+            <p><b>Name:</b> "{m.name}"</p>
+            <p><b>Latest value:</b> {m.signal[0]}</p>
+            <p><b>Location:</b> {m.lat}, {m.lng}{" "}</p>
             <Sparklines data={m.signal}>
   <SparklinesLine color={m.color} />
 </Sparklines>
-            <button onClick={deleteMarker.bind(this, i)}>x</button>
           </li>
         ))}
       </ul>
-      
-      <div>
-        Lat: <input onChange={(event) => setLatInput(event.target.value)} />
-        Lng: <input onChange={(event) => setLngInput(event.target.value)} />
-      </div>
-      
-      <button onClick={addNewMarker}>Add Marker</button>
-    </div>
+          </div>
   );
 }
 
