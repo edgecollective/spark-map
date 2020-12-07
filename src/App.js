@@ -6,15 +6,14 @@ import React, { useState } from "react";
 function App() {
 
   const [signal] = useState([
-    [5,10,3,2,4,5,2],[5,2,3,2,5,5,2],[5,2,20,2,5,5,2]
+    [5,10,3,2,4,5,2],[5,2,3,2,5,5,2],[5,2,20,2,5,5,2],[5,2,20,2,5,5,2]
   ]);
 
   const [markers, setMarkers] = useState([
-    { lat: 51.505, lng: -0.09 },
-    { lat: 51.525, lng: -0.09 },
-    { lat: 51.535, lng: -0.08 },
+    { name: "sensor1",lat: 51.505, lng: -0.09 , color:"red", signal:[5,10,3,2,4,5,2]},
+    { name: "sensor1",lat: 51.525, lng: -0.09 , color:"blue", signal:[5,2,3,2,5,5,2]},
+    { name: "sensor1",lat: 51.535, lng: -0.08 , color:"green", signal:[5,2,20,2,5,5,2]},
   ]);
-
 
   const [center, setCenter] = useState({ lat: 51.505, lng: -0.09 });
 
@@ -37,15 +36,13 @@ function App() {
   return (
     <div className="App">
       <div className="wrapper">
- {/*      <PollSidebar
+ {      <PollSidebar
           markers={markers}
           addMarker={addMarker}
           deleteMarker={deleteMarker}
           centerMarker={centerMarker}
-        /> */}
-        <SparklineSidebar
-         signal={signal}
-        />
+        /> }
+        
         <PollMap
           markers={markers}
           center={center}
@@ -86,7 +83,7 @@ function PollMap(props) {
 }
 
 function SparklineSidebar(props) {
-  const { signal } = props
+  const { signal,centerMarker } = props
   return (
     <div className="sidebar">
      <Sparklines data={signal[0]}>
@@ -122,15 +119,22 @@ function PollSidebar(props) {
               centerMarker(i);
             }}
           >
-            Lat: {m.lat}, Long: {m.lng}{" "}
+            <p>Name: {m.name}</p>
+            <p>Latest value:{m.signal[0]}</p>
+            <p>Lat: {m.lat}, Lon: {m.lng}{" "}</p>
+            <Sparklines data={m.signal}>
+  <SparklinesLine color={m.color} />
+</Sparklines>
             <button onClick={deleteMarker.bind(this, i)}>x</button>
           </li>
         ))}
       </ul>
+      
       <div>
         Lat: <input onChange={(event) => setLatInput(event.target.value)} />
         Lng: <input onChange={(event) => setLngInput(event.target.value)} />
       </div>
+      
       <button onClick={addNewMarker}>Add Marker</button>
     </div>
   );
